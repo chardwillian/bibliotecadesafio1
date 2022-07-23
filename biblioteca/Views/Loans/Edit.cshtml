@@ -1,0 +1,40 @@
+﻿@model biblioteca.Models.ViewModels.LoanFormViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Atualização do empréstimo</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <input type="hidden" asp-for="Loan.Id" />
+                <label asp-for="Loan.StartLoan" class="control-label"></label>
+                <input asp-for="Loan.StartLoan" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Loan.Amount" class="control-label"></label>
+                <input asp-for="Loan.Amount" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Loan.Status" class="control-label"></label>
+                <input asp-for="Loan.Status" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Loan.UserId" class="control-label"></label>
+                <select asp-for="Loan.UserId" asp-items="@(new SelectList(Model.Users,"Id","Name"))" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Loan.BookId" class="control-label"></label>
+                <select asp-for="Loan.BookId" asp-items="@(new SelectList(Model.Books,"Id","Name"))" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-default" />
+                <a asp-action="Index">Voltar para a lista</a>
+            </div>
+        </form>
+    </div>
+</div> 
