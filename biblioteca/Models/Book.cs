@@ -1,10 +1,14 @@
-﻿namespace biblioteca.Models {
+﻿using System.Collections.Generic;
+
+namespace biblioteca.Models {
     public class Book
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int Amount { get; set; }
-      //  public int AmountBorrowed { get; set; }
+
+        public ICollection<Loan> Loans { get; set; }
+        //  public int AmountBorrowed { get; set; }
 
         public Book()
         {

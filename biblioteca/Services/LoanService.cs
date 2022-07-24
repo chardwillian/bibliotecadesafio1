@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using biblioteca.Services.Exceptions;
+using biblioteca.Models.Enums;
 
 namespace biblioteca.Services
 {
@@ -27,7 +28,7 @@ namespace biblioteca.Services
         public void Insert(Loan obj)
         {
             obj.StartLoan = DateTime.Now;
-          //  obj.Status = "Activated";
+            obj.Status = LoanStatus.Activated;
             _context.Add(obj);
             _context.SaveChanges();
         }
