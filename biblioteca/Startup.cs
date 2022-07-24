@@ -25,9 +25,11 @@ namespace biblioteca
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<BibliotecaContext>(options => 
-                    options.UseMySql(Configuration.GetConnectionString("BibliotecaContext"),
-                    new MySqlServerVersion(new Version())));
+            //services.AddDbContext<BibliotecaContext>(options => 
+            //        options.UseMySql(Configuration.GetConnectionString("BibliotecaContext"),
+            //        new MySqlServerVersion(new Version())));
+
+            services.AddDbContext<BibliotecaContext>(op => op.UseSqlServer("name=ConnectionStrings:bibliotecaContext"));
 
             services.AddScoped<SeedingService>();
             services.AddScoped<LoanService>();

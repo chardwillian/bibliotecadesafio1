@@ -12,6 +12,8 @@ namespace biblioteca.Models
         public string Name { get; set; }
         public string Registration { get; set; }
 
+        public ICollection<Loan> Loans { get; set; }
+
         public User()
         {
 

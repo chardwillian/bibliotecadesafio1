@@ -33,17 +33,17 @@ namespace biblioteca.Services
 
         public Book FindById(int id)
         {
-            return _context.Book.FirstOrDefault(obj => obj.Id == id);
+            return _context.Book.Find(id);
         }
 
         public void RemoveBook(int id)
         {
-            var loans = _loanService.FindById(id);
-            if (loans != null)
+            var hasActivatedLoans = _loanService.FindAllLoan().Any(s => s.BookId == id && s.Status == Models.Enums.LoanStatus.Activated);
+            if (hasActivatedLoans)
             {
                 throw new NotFoundException("Não é possível deletar um livro que tenha um empréstimo ativo");
             }
-            var book = _context.Book.Find(id);
+            var book = FindById(id);
             _context.Book.Remove(book);
             _context.SaveChanges();
         }
