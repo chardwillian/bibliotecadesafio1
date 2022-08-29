@@ -1,5 +1,6 @@
 ﻿using biblioteca.Data;
 using biblioteca.Models;
+using biblioteca.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace biblioteca.Services
         public void Insert(Loan obj)
         {
             obj.StartLoan = DateTime.Now;
-          //  obj.Status = "Activated";
+            obj.Status = LoanStatus.Activated;
             _context.Add(obj);
             _context.SaveChanges();
         }

@@ -22,8 +22,8 @@ namespace biblioteca.Controllers
         }
         public IActionResult Index()
         {
-            var baxim = _bookService.FindAllBooks();
-            return View(baxim);
+            var books = _bookService.FindForLoan();
+            return View(books);
         }
 
         public IActionResult Create()

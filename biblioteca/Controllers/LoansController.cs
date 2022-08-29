@@ -27,7 +27,7 @@ namespace biblioteca.Controllers
 
         public IActionResult Create()
         {
-            var books = _bookService.FindAllBooks();
+            var books = _bookService.FindForLoan();
             var users = _userService.FindAllUser();
             var viewModel = new LoanFormViewModel { Books = books, Users = users };
             return View(viewModel);

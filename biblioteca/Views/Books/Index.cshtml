@@ -1,10 +1,12 @@
-﻿@model IEnumerable<biblioteca.Models.Book>
+﻿@using biblioteca.Models.Enums;
+
+@model IEnumerable<biblioteca.Models.Book>
+
 
 @{
     ViewData["Title"] = "Index";
-    var teste = Model;
+  //  var teste = Model;
 }
-
 <h1>Lista de livros</h1>
 
 <p>
@@ -29,6 +31,7 @@
     <tbody>
         @foreach (var item in Model)
         {
+            item.Amount = item.Amount - item.Loans.Where(x => x.Status == LoanStatus.Activated).Count(); 
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
@@ -37,7 +40,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
+                    @Html.DisplayFor(modelItem => item.Amount) @*- item.Loans.Where(x => x.Status == LoanStatus.Activated).Count()*@
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

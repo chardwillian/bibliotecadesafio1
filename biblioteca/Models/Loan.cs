@@ -1,12 +1,16 @@
 ﻿using biblioteca.Models.Enums;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace biblioteca.Models
 {
     public class Loan
     {
         public int Id { get; set; }
+
+        [Display(Name= "Inicio empréstimo")]
         public DateTime StartLoan { get; set; }
+        [Display(Name = "Quantidade")]
         public int Amount { get; set; }
         public LoanStatus Status { get; set; }
         public User User { get; set; }

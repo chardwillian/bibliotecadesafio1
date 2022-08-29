@@ -36,8 +36,8 @@ namespace biblioteca.Services
         }
         public void RemoveUser(int id)
         {
-            var loans = _loanService.FindById(id);
-            if (loans != null)
+            var hasActivatedLoans = _loanService.FindAllLoan().Any(s => s.UserId == id && s.Status == Models.Enums.LoanStatus.Activated);
+            if (hasActivatedLoans)
             {
                 throw new NotFoundException("Não pode remover usuário que tenha um empréstimo ativo");
             }

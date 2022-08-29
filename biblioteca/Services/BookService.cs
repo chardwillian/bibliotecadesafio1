@@ -1,11 +1,11 @@
 ﻿using biblioteca.Data;
 using biblioteca.Models;
+using biblioteca.Models.Enums;
 using biblioteca.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace biblioteca.Services
 {
@@ -31,19 +31,39 @@ namespace biblioteca.Services
             return _context.Book.ToList();
         }
 
+        public List<Book> FindForLoan()
+        {
+           // var teste = _context.Book.ToList();
+           // var teste22 = _context.Book.Include(x => x.Loans).ToList();
+            var hasAvailableLoan = _context.Book.Include(x => x.Loans)
+                .Where(x => x.Amount - x.Loans.Where(s => s.Status == LoanStatus.Activated).Count() > 0)
+                .ToList();
+            return hasAvailableLoan;
+        
+        }
+
+        //public void NovosExemplares()
+        //{
+            
+        //    if (!teste && _context.Book.Where(x => x.Amount.Count() < 10)
+        //    {
+
+        //    }
+        //}
         public Book FindById(int id)
         {
-            return _context.Book.FirstOrDefault(obj => obj.Id == id);
+          // return _context.Book.FirstOrDefault(obj => obj.Id == id);
+            return _context.Book.Find(id);
         }
 
         public void RemoveBook(int id)
         {
-            var loans = _loanService.FindById(id);
-            if (loans != null)
+            var hasActivatedLoans = _loanService.FindAllLoan().Any(s => s.BookId == id && s.Status == Models.Enums.LoanStatus.Activated);
+            if (hasActivatedLoans)
             {
                 throw new NotFoundException("Não é possível deletar um livro que tenha um empréstimo ativo");
             }
-            var book = _context.Book.Find(id);
+            var book = FindById(id);
             _context.Book.Remove(book);
             _context.SaveChanges();
         }
@@ -63,23 +83,6 @@ namespace biblioteca.Services
             {
                 throw new DbConcurrencyException(e.Message);
             }
-        }
-
-        public void DecrementAmountBorrowedBook(int id)
-        {
-            var book = _context.Book.Find(id);
-            //book.Amount = book.Amount - 1
-            book.Amount--;
-            _context.Update(book);
-            _context.SaveChanges();
-        }
-
-        public void IncrementAmountBorrowedBook(int id)
-        {
-            var book = _context.Book.Find(id);
-            book.Amount++;
-            _context.Update(book);
-            _context.SaveChanges();
         }
     }
 }
